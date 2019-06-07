@@ -48,5 +48,24 @@ document.querySelector('#current-' + activePlayer).textContent = dice;
 
 document.querySelector('.dice').style.display = 'none';
 
+// //callback function is a function passed to another function
+// function btn() {
+
+// }
+
+// btn();
+
+document.querySelector('btn-roll').addEventListener(click, function() {
+//create a random numer
+    dice = Math.floor(Math.random() * 6) + 1;
+
+    //display result
+
+    document.querySelector('.dice').style.display = 'block';
+
+    //update round score IF the rolled number was not 1
+
+});
+//what if I add a comment here 
 
 
