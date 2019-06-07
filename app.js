@@ -66,7 +66,7 @@ document.querySelector('btn-roll').addEventListener(click, function() {
     //update round score IF the rolled number was not 1
 
 });
-//what if I add a comment here 
+//what if I add a comment not here
 
 
 
