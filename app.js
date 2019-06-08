@@ -65,13 +65,13 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 
 
     // update round score IF the rolled number was not 1
-    if (dice  !== 1) {
-        //add score
-        roundScore += dice;
+   if (dice !== 1) {
+       //add score
+        roundScore += dice; 
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
-    }else {
-        //next player
-    }
+   }else {
+       //next player
+   }
 
 });
 //what if I add a comment not here
