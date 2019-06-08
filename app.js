@@ -9,17 +9,15 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, dice;
+var scores, roundScore, activePlayer;
 
 scores = [0,0];
 //this is a total score after the dices have been rolled
 roundScore = 0;
 //this is for the player who is rolling the dice at any given time
-activePlayer = 1;
+activePlayer = 0;
 // the dice will provide a random number between 1-6. Use math random and mat floor to get an integer that isnt a decimal
 
-dice = Math.floor(Math.random() * 6) + 1;
-console.log(dice);
 
 /*
 queryselector lets us select stuff exactly how we do it in CSS 
@@ -34,7 +32,7 @@ inside the little red box) and it is coming from the dice which is a function
 that creates a random number.
 */
 
-document.querySelector('#current-' + activePlayer).textContent = dice;
+// document.querySelector('#current-' + activePlayer).textContent = dice;
 
 /*this doing the same thing but using HTML - use ' ' every time you use html inside js
 */
@@ -48,22 +46,32 @@ document.querySelector('#current-' + activePlayer).textContent = dice;
 
 document.querySelector('.dice').style.display = 'none';
 
-// //callback function is a function passed to another function
-// function btn() {
+document.getElementById('score-0').textContent = '0';
+document.getElementById('score-1').textContent = '0';
+document.getElementById('current-0').textContemt = '0';
+document.getElementById('current-1').textContent = '0';
 
-// }
+/*callback function is a function passed to another function
+*/
 
-// btn();
-
-document.querySelector('btn-roll').addEventListener(click, function() {
+document.querySelector('.btn-roll').addEventListener('click', function() {
 //create a random numer
-    dice = Math.floor(Math.random() * 6) + 1;
+    var dice = Math.floor(Math.random() * 6) + 1;
 
     //display result
+    var diceDom = document.querySelector('.dice');
+    diceDom.style.display = 'block';
+    diceDom.src = 'dice-' + dice + '.png';
 
-    document.querySelector('.dice').style.display = 'block';
 
-    //update round score IF the rolled number was not 1
+    // update round score IF the rolled number was not 1
+    if (dice  !== 1) {
+        //add score
+        roundScore += dice;
+        document.querySelector('#current-' + activePlayer).textContent = roundScore;
+    }else {
+        //next player
+    }
 
 });
 //what if I add a comment not here
