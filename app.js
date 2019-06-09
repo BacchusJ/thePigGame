@@ -70,11 +70,27 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         roundScore += dice; 
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
    }else {
-       //next player
+       //next player "? = then", ": = else"
+
+       activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+       roundScore = 0;
+
+       document.getElementById('current-0').textContent = '0';
+       document.getElementById('current-1').textContent = '0';
+
+       //removing and adding classes for when the player is active by using toggle
+       document.querySelector('.player-0-panel').classList.toggle('active');
+       document.querySelector('.player-1-panel').classList.toggle('active');
+       
+       document.querySelector('.dice').style.display = 'none';
    }
 
 });
-//what if I add a comment not here
 
+/*
+removes the class placed onthe active player when it becomes innactive or the score becomes 0
+document.querySelector('.player-0-panel').classList.remove('active');
+document.querySelector('.player-1-panel').classList.add('active');
+*/
 
 
