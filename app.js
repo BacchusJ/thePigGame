@@ -9,16 +9,87 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gamePlaying;
+// scores = [0,0];
+// //this is a total score after the dices have been rolled
+// roundScore = 0;
+// //this is for the player who is rolling the dice at any given time
+// activePlayer = 0;
+// // the dice will provide a random number between 1-6. Use math random and mat floor to get an integer that isnt a decimal
 
-scores = [0,0];
-//this is a total score after the dices have been rolled
-roundScore = 0;
-//this is for the player who is rolling the dice at any given time
-activePlayer = 0;
-// the dice will provide a random number between 1-6. Use math random and mat floor to get an integer that isnt a decimal
+init();
 
 
+document.querySelector('.btn-roll').addEventListener('click', function() {
+    if(gamePlaying) {
+        //create a random number
+        var dice = Math.floor(Math.random() * 6) + 1;
+
+        //display result
+        var diceDom = document.querySelector('.dice');
+        diceDom.style.display = 'block';
+        diceDom.src = 'dice-' + dice + '.png';
+
+
+        // update round score IF the rolled number was not 1
+        if (dice !== 1) {
+       //add score
+        roundScore += dice; 
+        document.querySelector('#current-' + activePlayer).textContent = roundScore;
+        }else {
+       //next player "? = then", ": = else"
+        nextPlayer();
+       
+        }
+
+    }
+});
+
+document.querySelector('.btn-hold').addEventListener('click', function () {
+    if (gamePlaying) {
+            //add current score to globel score
+    scores[activePlayer] += roundScore;
+    //update the user interface
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer]
+
+    //check if player won the game 
+
+    if (scores[activePlayer] >= 20) {
+        document.querySelector('#name-' + activePlayer).textContent = "WINNER";
+        //hides the dice 
+        document.querySelector('.dice').style.display = 'none';
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
+        gamePlaying = false;
+    }else{
+         //next player when the active one chooses to hold or hits 1
+        nextPlayer();
+        }
+    }
+});
+
+function nextPlayer () {
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+       roundScore = 0;
+
+       document.getElementById('current-0').textContent = '0';
+       document.getElementById('current-1').textContent = '0';
+
+       //removing and adding classes for when the player is active by using toggle
+       document.querySelector('.player-0-panel').classList.toggle('active');
+       document.querySelector('.player-1-panel').classList.toggle('active');
+       
+       document.querySelector('.dice').style.display = 'none';
+
+}
+
+document.querySelector('.btn-new').addEventListener('click', init);
+
+function init() {
+    scores = [0, 0];
+    activePlayer = 0;
+    roundScore = 0;
+    gamePlaying = true;
 /*
 queryselector lets us select stuff exactly how we do it in CSS 
 we are now going to put the value of our dice in the "current" player box using querySelctor.
@@ -50,43 +121,16 @@ document.getElementById('score-0').textContent = '0';
 document.getElementById('score-1').textContent = '0';
 document.getElementById('current-0').textContemt = '0';
 document.getElementById('current-1').textContent = '0';
-
+document.getElementById('name-0').textContent = 'Player 1';
+document.getElementById('name-1').textContent = 'Player 2';
+document.querySelector('.player-0-panel').classList.remove('winner');
+document.querySelector('.player-1-panel').classList.remove('winner');
+document.querySelector('.player-0-panel').classList.remove('active');
+document.querySelector('.player-1-panel').classList.remove('active');
+document.querySelector('.player-0-panel').classList.add('active');
 /*callback function is a function passed to another function
 */
-
-document.querySelector('.btn-roll').addEventListener('click', function() {
-//create a random numer
-    var dice = Math.floor(Math.random() * 6) + 1;
-
-    //display result
-    var diceDom = document.querySelector('.dice');
-    diceDom.style.display = 'block';
-    diceDom.src = 'dice-' + dice + '.png';
-
-
-    // update round score IF the rolled number was not 1
-   if (dice !== 1) {
-       //add score
-        roundScore += dice; 
-        document.querySelector('#current-' + activePlayer).textContent = roundScore;
-   }else {
-       //next player "? = then", ": = else"
-
-       activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-       roundScore = 0;
-
-       document.getElementById('current-0').textContent = '0';
-       document.getElementById('current-1').textContent = '0';
-
-       //removing and adding classes for when the player is active by using toggle
-       document.querySelector('.player-0-panel').classList.toggle('active');
-       document.querySelector('.player-1-panel').classList.toggle('active');
-       
-       document.querySelector('.dice').style.display = 'none';
-   }
-
-});
-
+}
 /*
 removes the class placed onthe active player when it becomes innactive or the score becomes 0
 document.querySelector('.player-0-panel').classList.remove('active');
